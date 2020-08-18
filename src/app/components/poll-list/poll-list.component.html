@@ -1,0 +1,29 @@
+
+<h2>Poll list</h2>
+<table class="center table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">Age</th>
+        <th scope="col">work place</th>
+        <th scope="col">Profession</th>
+        <th scope="col">Preferred language</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of polls">
+        <td>{{user.name}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.age}}</td>
+        <td>{{user.workPlace}}</td>
+        <td>{{user.profession}}</td>
+        <td>{{user.preferredLanguage}}</td>
+        <td>
+          <span class="badge badge-info" routerLink="/poll/update/{{user.id}}">Edit</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>

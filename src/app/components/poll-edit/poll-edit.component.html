@@ -1,0 +1,47 @@
+<div class="container custom-container">
+  <div class="col-md-12">
+    
+    <h3 class="mb-3 text-center">Update Poll</h3>
+
+    <div class="form-group">
+
+        <label for="nombres">Names</label>
+      <input type="text" [(ngModel)]="pollData.name" class="form-control" placeholder="Name">
+    </div>
+
+    <div class="form-group">
+
+        <label for="Apellidos">Lastname</label>
+      <input type="text" [(ngModel)]="pollData.lastName" class="form-control" placeholder="lastName">
+    </div>
+
+    <div class="form-group">
+
+        <label for="edad">Age</label>
+      <input type="text" [(ngModel)]="pollData.age" class="form-control" placeholder="age">
+    </div>
+
+    <div class="form-group">
+
+        <label for="workPlace">Work place</label>
+      <input type="text" [(ngModel)]="pollData.workPlace" class="form-control" placeholder="workPlace">
+    </div>
+
+    <div class="form-group">
+
+        <label for="profession">profession</label>
+      <input type="text" [(ngModel)]="pollData.profession" class="form-control" placeholder="profession">
+    </div>
+
+    <div class="form-group">
+        <label for="PreferredLanguage">Preferred Language</label>
+       
+      <input type="text" [(ngModel)]="pollData.preferredLanguage" class="form-control" placeholder="preferredLanguage">
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-success btn-lg btn-block" (click)="updatePoll()">Update</button>
+    </div>
+    
+  </div>
+</div>
