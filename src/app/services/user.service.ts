@@ -13,7 +13,7 @@ export class UserService {
 
     // Define API
     //apiURL = 'http://myBalancerCf-2112786308.us-east-1.elb.amazonaws.com';
-    apiURL = 'https://xvlwbfkz9f.execute-api.us-east-1.amazonaws.com/prod'
+    apiURL = 'https://277cz60nf2.execute-api.us-east-1.amazonaws.com/prod'
     //apiURL = 'https://7c35b42c8d19.ngrok.io/poll-service/api/v1'
 
 
