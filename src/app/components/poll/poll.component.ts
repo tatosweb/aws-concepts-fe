@@ -27,6 +27,8 @@ export class PollComponent implements OnInit {
   closeResult: string;
   modalOptions:NgbModalOptions;
   preferredLanguageSelected:string;
+  invalidAgeValue:boolean;
+  isVisible = true;
 
   constructor(
     public userService: UserService,
@@ -42,16 +44,20 @@ export class PollComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isVisible = true;
+
     this.pollForm = this.formBuilder.group({
       name: ['', Validators.required],
       lastName: ['', Validators.required],
-      age: ['', Validators.required],
+      age: ['', [Validators.min(18), Validators.max(100),  Validators.required]],
       workPlace: ['', Validators.required],
       profession: ['', Validators.required],
       preferredLanguage: ['', Validators.required]
     });
 
     if (this.action === 'update'){
+      this.isVisible = false;
+
       console.log ("s");
       this.userService.getUser(this.id).subscribe((data) => {
         this.pollForm.setValue({
@@ -82,13 +88,16 @@ export class PollComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
 
-    if (this.pollForm.invalid) {
+    
+
+    if (this.pollForm.invalid || this.pollForm.controls.age.value === "") {
+      this.invalidAgeValue = true;
       return;
     }
 
     if (this.action === 'vote'){
+      this.pollForm.controls.preferredLanguage.setValue(this.preferredLanguageSelected);
       this.userDetails = this.pollForm.getRawValue();
-      //this.userDetails.preferredLanguage = preferredLanguageSelected;
       this.userService.createUser(this.userDetails).subscribe((data: {}) => {
         const modalRef = this.modalService.open(PollConfirmationModalComponent);
         modalRef.componentInstance.my_modal_title = 'Congratulations!';
@@ -105,27 +114,25 @@ export class PollComponent implements OnInit {
       }
     }
   }
-
   selectCheckBox(targetType: CheckBoxType) {
     // If the checkbox was already checked, clear the currentlyChecked variable
     if (this.currentlyChecked === targetType) {
       this.currentlyChecked = CheckBoxType.NONE;
-      //this.userDetails.preferredLanguage = "";
+      this.preferredLanguageSelected = "";
       this.checked = false;
       return;
     }
 
-    /*
+    
     if (targetType == CheckBoxType.JAVA) {
-      this.userDetails.preferredLanguage = "Java";
+      this.preferredLanguageSelected = "Java";
     } else {
-      this.userDetails.preferredLanguage = "C";
+      this.preferredLanguageSelected = "C#";
     }
 
-    if (this.userDetails.preferredLanguage !== "") {
+    if (this.preferredLanguageSelected !== "") {
       this.checked = true;
     }
-    */
 
     this.currentlyChecked = targetType;
   }
@@ -137,6 +144,15 @@ export class PollComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return  `with: ${reason}`;
+    }
+  }
+
+  validateNumber(e: any) {
+    let input = String.fromCharCode(e.charCode);
+    const reg = /^\d*(?:[.,]\d18|100)?$/;
+
+    if (!reg.test(input)) {
+      e.preventDefault();
     }
   }
 
