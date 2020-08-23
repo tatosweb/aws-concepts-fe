@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../domain/user';
 import { LoginResponse } from '../../domain/loginResponse';
+import { Login } from '../../domain/login';
 
 import { UserService } from '../../services/user.service';
-import { SecurityService } from '../../_services/security.service';
+import { SecurityService } from '../../services/security.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { SecurityService } from '../../_services/security.service';
 export class UserLoginComponent implements OnInit {
 
     currentUser: User;
+    loginDTO: Login;
     loading = false;
     loginForm: FormGroup;
     returnUrl: string;
@@ -55,7 +57,7 @@ export class UserLoginComponent implements OnInit {
 
         this.loading = true;
 
-    }
+    }       
 
     login() {
         // stop here if form is invalid
@@ -63,7 +65,8 @@ export class UserLoginComponent implements OnInit {
             return;
         }
 
-        this.securityService.login(this.login).subscribe((data: LoginResponse)=>{
+        this.loginDTO = this.loginForm.getRawValue();
+        this.securityService.login(this.loginDTO).subscribe((data: LoginResponse)=>{
         
             if (data.isAdmin) {
                 this.router.navigate(['/poll-list'])

@@ -11,7 +11,7 @@ import { HOST_BACKEND} from '../domain/constants';
 export class SecurityService {
 
 
-  urlLogin: string = `${HOST_BACKEND}/api/security/login`;
+  urlLogin: string = `${HOST_BACKEND}/poll-service/api/security/login`;
   
   constructor(
     private http: HttpClient,
