@@ -2,9 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../domain/user';
-
+import { LoginResponse } from '../../domain/loginResponse';
 
 import { UserService } from '../../services/user.service';
+import { SecurityService } from '../../_services/security.service';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class UserLoginComponent implements OnInit {
     submitted = false;
     
     constructor(
+        
+        public securityService: SecurityService,
         public userService: UserService,
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -60,26 +63,13 @@ export class UserLoginComponent implements OnInit {
             return;
         }
 
-        console.log (this.role)
-
-        if (this.role === 'Admin') {
-            this.router.navigate(['/poll-list'])
-        } else {
-            this.router.navigate(['/poll/vote/1'])
-        }
-
-        /*
- this.authenticationService.login(this.f.username.value, this.f.password.value)
-     .pipe(first())
-     .subscribe(
-         data => {
-             this.router.navigate([this.returnUrl]);
-         },
-         error => {
-             this.alertService.error(error);
-             this.loading = false;
-         });
-         */
-
+        this.securityService.login(this.login).subscribe((data: LoginResponse)=>{
+        
+            if (data.isAdmin) {
+                this.router.navigate(['/poll-list'])
+            } else {
+                this.router.navigate(['/poll/vote/1'])
+            }
+        })
     }
 }

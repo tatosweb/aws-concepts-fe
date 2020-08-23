@@ -3,6 +3,7 @@ import { HttpClient,  HttpHeaders  } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import {User} from '../domain/user';
+import { HOST_BACKEND} from '../domain/constants';
 
 
 @Injectable({
@@ -11,12 +12,9 @@ import {User} from '../domain/user';
 
 export class UserService {
 
-    // Define API
-    //apiURL = 'http://myBalancerCf-2112786308.us-east-1.elb.amazonaws.com';
-    apiURL = 'https://277cz60nf2.execute-api.us-east-1.amazonaws.com/prod'
-    //apiURL = 'https://7c35b42c8d19.ngrok.io/poll-service/api/v1'
 
-
+  apiURL: string = `${HOST_BACKEND}/poll-service/api/v1`;
+  
   constructor(protected http: HttpClient) { }
 
   httpOptions = {
@@ -28,7 +26,7 @@ export class UserService {
 
   // HttpClient API get() method => Fetch users list
   getUsers(): Observable<User> {
-    return this.http.get<User>(this.apiURL+'/poll-service/api/v1/polls')
+    return this.http.get<User>(`${this.apiURL}/polls`)
      .pipe(
       retry(1),
       catchError(this.handleError)
@@ -37,7 +35,7 @@ export class UserService {
 
    // HttpClient API get() method => Fetch user
    getUser(id): Observable<User> {
-    return this.http.get<User>(this.apiURL +'/poll-service/api/v1/poll/' + id)
+    return this.http.get<User>(`${this.apiURL}/poll/` + id)
     .pipe(
       retry(1),
       catchError(this.handleError)
@@ -47,7 +45,7 @@ export class UserService {
     // HttpClient API post() method => Create user
   createUser(user): Observable<User> {
      console.log( JSON.stringify(user));
-      return this.http.post<User>(this.apiURL +'/poll-service/api/v1/poll', JSON.stringify(user), this.httpOptions)
+      return this.http.post<User>(`${this.apiURL}/poll`, JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -57,16 +55,7 @@ export class UserService {
 
   // HttpClient API put() method => Update user
   updateUser(id, user): Observable<User> {
-    return this.http.put<User>(this.apiURL + '/poll-service/api/v1/poll/' + id, JSON.stringify(user), this.httpOptions)
-    .pipe(
-      retry(1),
-      catchError(this.handleError)
-    )
-  }
-
-  // HttpClient API delete() method => Delete user
-  deleteUser(id){
-    return this.http.delete<User>(this.apiURL + '/' + id, this.httpOptions)
+    return this.http.put<User>(`${this.apiURL}/poll/` + id, JSON.stringify(user), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)
