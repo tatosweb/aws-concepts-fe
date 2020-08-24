@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../domain/user';
 import { LoginResponse } from '../../domain/loginResponse';
-import { Login } from '../../domain/login';
+import { LoginDTO } from '../../domain/login';
 
 import { UserService } from '../../services/user.service';
 import { SecurityService } from '../../services/security.service';
@@ -18,7 +18,7 @@ import { SecurityService } from '../../services/security.service';
 export class UserLoginComponent implements OnInit {
 
     currentUser: User;
-    loginDTO: Login;
+    loginDTO: LoginDTO;
     loading = false;
     loginForm: FormGroup;
     returnUrl: string;

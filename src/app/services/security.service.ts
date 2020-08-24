@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { Login } from '../domain/login';
+import { LoginDTO } from '../domain/login';
 import { HOST_BACKEND} from '../domain/constants';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class SecurityService {
     private http: HttpClient,
     private router: Router)  { }
 
-  login(login: Login){
-    return this.http.post(`${this.urlLogin}`, login);
+  login(login: LoginDTO){
+    return this.http.post(`${this.urlLogin}`, JSON.stringify({username: login.username, password: login.password}));    
   }
 }
