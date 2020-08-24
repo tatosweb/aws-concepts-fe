@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, Headers } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 //import {Http, Headers} from 'angular2/http';
 
 import { LoginDTO } from '../domain/login';
 import { HOST_BACKEND} from '../domain/constants';
 
-const headers = new Headers();
+const headers = new HttpHeaders();
   headers.append('Access-Control-Allow-Headers', 'Content-Type');
   headers.append('Access-Control-Allow-Methods', 'GET');
   headers.append('Access-Control-Allow-Origin', '*');
