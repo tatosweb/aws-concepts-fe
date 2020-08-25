@@ -20,8 +20,14 @@ const httpOptions = {
 
 export class SecurityService {
  
-
   urlLogin: string = `${HOST_BACKEND}/poll-service/api/security/login`;
+  urlOauth: string = `${HOST_BACKEND}/poll-service/api/security/token`;
+  
+  urlRefreshToken: string = `${HOST_BACKEND}/poll-service/api/security/refresh-token`;
+  urlSignOut: string = `${HOST_BACKEND}/poll-service/api/security/signout`;
+  
+  //urlRenewPassword: string = `${HOST_BACKEND}/api/security/first-reset-password`;
+  //urlUpdatePassword: string = `${HOST_BACKEND}/api/security/change-password`;
   
   constructor(
     private http: HttpClient,
@@ -34,4 +40,15 @@ export class SecurityService {
     
     return this.http.post(`${this.urlLogin}`, JSON.stringify({username: login.username, password: login.password}), { headers: httpOptions.headers});    
   }
+
+  validarToken() {
+    return this.http.post(this.urlOauth, "");
+  }
+
+
+
+
+
+
+
 }

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../domain/user';
 import { LoginResponse } from '../../domain/loginResponse';
 import { LoginDTO } from '../../domain/login';
-
+import { TOKEN_NAME, PARAM_USUARIO, REFRESH_TOKEN_NAME, ACCESS_TOKEN_NAME } from '../../domain/constants';
 import { UserService } from '../../services/user.service';
 import { SecurityService } from '../../services/security.service';
 
@@ -46,7 +46,6 @@ export class UserLoginComponent implements OnInit {
     
     get f() { return this.loginForm.controls; }
 
-
     onSubmit() {
         this.submitted = true;
 
@@ -54,25 +53,25 @@ export class UserLoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-
+        
         this.loading = true;
-
-    }       
-
-    login() {
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
         this.loginDTO = this.loginForm.getRawValue();
         this.securityService.login(this.loginDTO).subscribe((data: LoginResponse)=>{
-        
-            if (data.isAdmin) {
+          if(data.status == 'OK'){
+            sessionStorage.setItem(TOKEN_NAME, data.idToken);
+            sessionStorage.setItem(REFRESH_TOKEN_NAME, data.refreshToken);
+            sessionStorage.setItem(ACCESS_TOKEN_NAME, data.accessToken);
+    
+            this.securityService.validarToken().subscribe((dato: any)=>{
+              sessionStorage.setItem(PARAM_USUARIO, JSON.stringify(dato.body));
+              if (data.isAdmin) {
                 this.router.navigate(['/poll-list'])
             } else {
                 this.router.navigate(['/poll/vote/1'])
             }
-        })
+            });
+          }
+      })
     }
+
 }
