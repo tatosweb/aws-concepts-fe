@@ -20,11 +20,11 @@ const httpOptions = {
 
 export class SecurityService {
  
-  urlLogin: string = `${HOST_BACKEND}/poll-service/api/security/login`;
-  urlOauth: string = `${HOST_BACKEND}/poll-service/api/security/token`;
+  urlLogin: string = `${HOST_BACKEND}/poll-service/api/v1/security/login`;
+  urlOauth: string = `${HOST_BACKEND}/poll-service/api/v1/security/token`;
   
-  urlRefreshToken: string = `${HOST_BACKEND}/poll-service/api/security/refresh-token`;
-  urlSignOut: string = `${HOST_BACKEND}/poll-service/api/security/signout`;
+  urlRefreshToken: string = `${HOST_BACKEND}/poll-service/api/v1/security/refresh-token`;
+  urlSignOut: string = `${HOST_BACKEND}/poll-service/api/v1/security/signout`;
   
   //urlRenewPassword: string = `${HOST_BACKEND}/api/security/first-reset-password`;
   //urlUpdatePassword: string = `${HOST_BACKEND}/api/security/change-password`;
@@ -44,11 +44,5 @@ export class SecurityService {
   validarToken() {
     return this.http.post(this.urlOauth, "");
   }
-
-
-
-
-
-
 
 }
