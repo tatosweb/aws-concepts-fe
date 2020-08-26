@@ -67,7 +67,7 @@ export class UserLoginComponent implements OnInit {
         this.loading = true;
         this.loginDTO = this.loginForm.getRawValue();
         this.securityService.login(this.loginDTO).subscribe((data: LoginResponse)=>{
-            if (data.isAdmin) {
+            if (data.admin) {
                 this.router.navigate(['/poll-list'])
             } else {
                 this.router.navigate(['/poll/vote/1'])

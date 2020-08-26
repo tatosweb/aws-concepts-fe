@@ -1,5 +1,5 @@
 export class LoginResponse{
-    isAdmin : boolean;
+    admin : boolean;
     status : string;
     accessToken: string;
     idToken: string;
