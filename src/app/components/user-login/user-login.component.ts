@@ -7,6 +7,7 @@ import { LoginDTO } from '../../domain/login';
 import { TOKEN_NAME, PARAM_USUARIO, REFRESH_TOKEN_NAME, ACCESS_TOKEN_NAME } from '../../domain/constants';
 import { UserService } from '../../services/user.service';
 import { SecurityService } from '../../services/security.service';
+//import { CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
 
 
 @Component({
@@ -31,7 +32,9 @@ export class UserLoginComponent implements OnInit {
         public userService: UserService,
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,        
+       // private cu: CognitoUser, 
+       // private cus: CognitoUserSession
     ) {
     }
 
@@ -42,6 +45,13 @@ export class UserLoginComponent implements OnInit {
         });
 
         this.role = 'User';
+
+        //this.cus = this.cu.getSignInUserSession();
+
+       // console.log("session init");
+       // console.log(this.cus);
+       // console.log("session end");
+
     }
     
     get f() { return this.loginForm.controls; }
