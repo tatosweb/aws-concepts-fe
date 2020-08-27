@@ -21,11 +21,11 @@ export class UserLoginComponent implements OnInit {
     loading = false;
     loginForm: FormGroup;
     returnUrl: string;
-    role:string;
+    role: string;
     submitted = false;
-    
+
     constructor(
-        
+
         public securityService: SecurityService,
         public userService: UserService,
         private formBuilder: FormBuilder,
@@ -41,7 +41,7 @@ export class UserLoginComponent implements OnInit {
         });
         this.role = 'User';
     }
-    
+
     get f() { return this.loginForm.controls; }
 
     onSubmit() {
@@ -54,17 +54,21 @@ export class UserLoginComponent implements OnInit {
 
         this.loading = true;
         this.loginDTO = this.loginForm.getRawValue();
-        this.securityService.login(this.loginDTO).subscribe((data: LoginResponse)=>{
-            sessionStorage.setItem(TOKEN_NAME, data.idToken);
-            sessionStorage.setItem(REFRESH_TOKEN_NAME, data.refreshToken);
-            sessionStorage.setItem(ACCESS_TOKEN_NAME, data.accessToken);
+        this.securityService.login(this.loginDTO).subscribe((data: LoginResponse) => {
+            if (data.status == 'OK') {
+                sessionStorage.setItem(TOKEN_NAME, data.idToken);
+                sessionStorage.setItem(REFRESH_TOKEN_NAME, data.refreshToken);
+                sessionStorage.setItem(ACCESS_TOKEN_NAME, data.accessToken);
 
-            if (data.admin) {
-                this.router.navigate(['/poll-list'])
+                if (data.admin) {
+                    this.router.navigate(['/poll-list'])
+                } else {
+                    this.router.navigate(['/poll/vote/1'])
+                }
             } else {
-                this.router.navigate(['/poll/vote/1'])
-            }         
-      })
+                this.loginForm.reset();
+            }
+        })
     }
 
 }
