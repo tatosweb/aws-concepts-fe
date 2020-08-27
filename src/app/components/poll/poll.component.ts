@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { SecurityService } from '../../services/security.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
@@ -31,6 +32,7 @@ export class PollComponent implements OnInit {
   isVisible = true;
 
   constructor(
+    public securityService: SecurityService,
     public userService: UserService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
@@ -105,6 +107,7 @@ export class PollComponent implements OnInit {
         this.pollForm.reset();
         this.submitted = false;
         this.checked = false;
+        this.securityService.cerrarSesion();
       })
     } else {
       if(window.confirm('Are you sure, you want to update?')){

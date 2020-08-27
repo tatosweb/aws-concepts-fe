@@ -55,6 +55,10 @@ export class UserLoginComponent implements OnInit {
         this.loading = true;
         this.loginDTO = this.loginForm.getRawValue();
         this.securityService.login(this.loginDTO).subscribe((data: LoginResponse)=>{
+            sessionStorage.setItem(TOKEN_NAME, data.idToken);
+            sessionStorage.setItem(REFRESH_TOKEN_NAME, data.refreshToken);
+            sessionStorage.setItem(ACCESS_TOKEN_NAME, data.accessToken);
+
             if (data.admin) {
                 this.router.navigate(['/poll-list'])
             } else {
